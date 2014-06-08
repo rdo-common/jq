@@ -1,6 +1,6 @@
 Name:           jq
 Version:        1.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Command-line JSON processor
 
 License:        MIT and ASL 2.0 and CC-BY and GPLv3
@@ -70,6 +70,9 @@ make check
 %{_datadir}/doc/jq/README.md
 
 %changelog
+* Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Thu Oct 24 2013 Flavio Percoco <flavio@redhat.com> - 1.3-2
 - Added check, manpage
 
