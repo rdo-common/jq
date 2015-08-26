@@ -1,14 +1,15 @@
 Name:           jq
-Version:        1.3
-Release:        5%{?dist}
+Version:        1.5
+Release:        1%{?dist}
 Summary:        Command-line JSON processor
 
 License:        MIT and ASL 2.0 and CC-BY and GPLv3
 URL:            http://stedolan.github.io/jq/
-Source0:        http://stedolan.github.io/%{name}/download/source/%{name}-%{version}.tar.gz
+Source0:        https://github.com/stedolan/jq/releases/download/%{name}-%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  flex
 BuildRequires:  bison
+BuildRequires:  oniguruma-devel
 
 %ifarch %{ix86} x86_64
 BuildRequires:  valgrind
@@ -31,12 +32,19 @@ lightweight and flexible command-line JSON processor
  program to do so is often shorter and simpler than
  you'd expect.
 
+%package devel
+Summary:	Development files for %{name}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+
+%description devel
+Development files for %{name}
+
 
 %prep
 %setup -qn %{name}-%{version}
 
 %build
-%configure
+%configure --disable-static
 make %{?_smp_mflags}
 # Docs already shipped in jq's tarball.
 # In order to build the manual page, it
@@ -54,6 +62,7 @@ make %{?_smp_mflags}
 
 %install
 make DESTDIR=%{buildroot} install
+find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 %check
 # Valgrind used, so restrict architectures for check
@@ -61,15 +70,29 @@ make DESTDIR=%{buildroot} install
 make check
 %endif
 
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
 %files
 %{_bindir}/%{name}
+%{_libdir}/libjq.so.*
 %{_datadir}/man/man1/jq.1.gz
 %{_datadir}/doc/jq/AUTHORS
 %{_datadir}/doc/jq/COPYING
 %{_datadir}/doc/jq/README
 %{_datadir}/doc/jq/README.md
 
+%files devel
+%{_includedir}/jq.h
+%{_includedir}/jv.h
+%{_libdir}/libjq.so
+
+
 %changelog
+* Tue Aug 25 2015 Haïkel Guémar <hguemar@fedoraproject.org> - 1.5-1
+- Upstream 1.5.0
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
