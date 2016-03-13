@@ -11,7 +11,7 @@ BuildRequires:  flex
 BuildRequires:  bison
 BuildRequires:  oniguruma-devel
 
-%ifarch %{ix86} x86_64
+%ifnarch s390
 BuildRequires:  valgrind
 %endif
 
@@ -90,6 +90,9 @@ make check
 
 
 %changelog
+* Sun Mar 13 2016 Peter Robinson <pbrobinson@fedoraproject.org> 1.5-3
+- valgrind on all but s390
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
