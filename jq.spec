@@ -1,6 +1,6 @@
 Name:           jq
 Version:        1.5
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Command-line JSON processor
 
 License:        MIT and ASL 2.0 and CC-BY and GPLv3
@@ -90,6 +90,9 @@ make check
 
 
 %changelog
+* Mon Jul 18 2016 Mamoru TASAKA <mtasaka@fedoraproject.org> - 1.5-4
+- Rebuild for oniguruma 6
+
 * Sun Mar 13 2016 Peter Robinson <pbrobinson@fedoraproject.org> 1.5-3
 - valgrind on all but s390
 
